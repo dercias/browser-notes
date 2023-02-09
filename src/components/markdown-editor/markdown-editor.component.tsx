@@ -112,7 +112,13 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
 
   return (
     <ThemeProvider>
-      <Remirror manager={manager} autoFocus={autoFocus} {...rest}>
+      <Remirror
+        manager={manager}
+        autoFocus={autoFocus}
+        label='content'
+        placeholder='Start typing...'
+        {...rest}
+      >
         <MarkdownEditorToolbar />
         <MarkdownEditorContainer>
           <EditorComponent />

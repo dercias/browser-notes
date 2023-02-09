@@ -6,7 +6,7 @@ type ItemContainerProps = {
   active: boolean;
 };
 
-export const ItemContainer = styled.div<ItemContainerProps>(({ active }) => [
+export const ItemContainer = styled.li<ItemContainerProps>(({ active }) => [
   tw`flex flex-row p-2 mb-2
   leading-5 text-neutral-800
   rounded-md

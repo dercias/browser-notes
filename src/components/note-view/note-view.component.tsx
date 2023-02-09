@@ -36,7 +36,7 @@ export const NoteView: FC<PropsWithChildren> = ({ children }) => {
           placeholder='Note Title'
           type='text'
           onChange={onTitleChange}
-          value={openNote.title}
+          value={openNote.title || ''}
         />
       </NoteMeta>
       <MarkdownEditor
