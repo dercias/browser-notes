@@ -1,15 +1,16 @@
-import { FC, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FC, PropsWithChildren, useContext } from 'react';
 
-import { Note, NotesContext } from '../../context';
+import { NotesContext } from '../../context';
+import { useOpenNote } from '../../hooks';
 import { MarkdownEditor } from '../markdown-editor/markdown-editor.component';
 import { NoteDetailsToobar } from '../note-details-toolbar/note-details-toolbar.component';
-import { EditorWrapper } from './note-view.styles';
+import { EditorWrapper, NoteMeta, TitleInput } from './note-view.styles';
 
 export const NoteView: FC<PropsWithChildren> = ({ children }) => {
-  const [openNote, setOpenNote] = useState<Note>();
-  const { openNoteId, updateNote, notes } = useContext(NotesContext);
+  const { updateNote } = useContext(NotesContext);
+  const { openNote } = useOpenNote();
 
-  const onChange = (value: string) => {
+  const onContentChange = (value: string) => {
     if (openNote) {
       updateNote({
         ...openNote,
@@ -18,17 +19,30 @@ export const NoteView: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (openNoteId !== openNote?.id) {
-      const found = notes.find((n) => n.id === openNoteId);
-      setOpenNote(found);
+  const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (openNote) {
+      updateNote({
+        ...openNote,
+        title: event.target.value,
+      });
     }
-  }, [openNoteId, setOpenNote, notes, openNote]);
+  };
 
   return openNote ? (
     <EditorWrapper>
       <NoteDetailsToobar note={openNote} />
-      <MarkdownEditor initialContent={openNote.content} onChange={onChange}>
+      <NoteMeta>
+        <TitleInput
+          placeholder='Note Title'
+          type='text'
+          onChange={onTitleChange}
+          value={openNote.title}
+        />
+      </NoteMeta>
+      <MarkdownEditor
+        initialContent={openNote.content}
+        onChange={onContentChange}
+      >
         {children}
       </MarkdownEditor>
     </EditorWrapper>

@@ -8,26 +8,23 @@ import {
 
 export type Note = {
   id: number;
+  title: string;
   content: string;
 };
 
 type NotesContextProps = {
-  openNoteId: number | null;
   notes: Note[];
   addNote: (note: Note) => void;
   updateNote: (note: Note) => void;
   removeNote: (note: Note) => void;
-  setOpenNoteId: (noteId: number | null) => void;
   createNote: (note: any) => Note | void;
 };
 
 export const NotesContext = createContext<NotesContextProps>({
-  openNoteId: null,
   notes: [],
   addNote: () => {},
   removeNote: () => {},
   updateNote: () => {},
-  setOpenNoteId: () => {},
   createNote: () => {},
 });
 
@@ -53,7 +50,6 @@ const createNoteWithId = (notes: Note[], note: Note) => {
 
 export const NotesProvider: FC<PropsWithChildren> = ({ children }) => {
   const [notes, setNotes] = useState<Note[]>([]);
-  const [openNoteId, setOpenNoteId] = useState<number | null>(null);
 
   useEffect(() => {
     const strNotes = localStorage.getItem('bn/notes');
@@ -69,10 +65,6 @@ export const NotesProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const removeNote = (note: Note) => {
     setNotes(removeNoteItem(notes, note));
-
-    if (openNoteId === note.id) {
-      setOpenNoteId(null);
-    }
   };
   const addNote = (note: Note) => setNotes(addNoteItem(notes, note));
   const updateNote = (note: Note) => setNotes(updateNoteItem(notes, note));
@@ -80,11 +72,9 @@ export const NotesProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const value = {
     notes,
-    openNoteId,
     removeNote,
     addNote,
     updateNote,
-    setOpenNoteId,
     createNote,
   };
 

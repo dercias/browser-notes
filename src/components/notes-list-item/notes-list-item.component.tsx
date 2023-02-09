@@ -1,6 +1,7 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Note, NotesContext } from '../../context';
+import { Note } from '../../context';
+import { useOpenNote } from '../../hooks';
 import { Icon, ItemContainer, Text } from './notes-list-item.styles';
 
 type NotesListItemProps = {
@@ -10,23 +11,22 @@ type NotesListItemProps = {
 export const NotesListItem: FC<NotesListItemProps> = ({ note }) => {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
-  const { setOpenNoteId, openNoteId } = useContext(NotesContext);
+  const { openNote } = useOpenNote();
 
   const handleOpenNote = (note: Note) => () => {
     if (note) {
-      setOpenNoteId(note.id);
       navigate(`/${note.id}`);
     }
   };
 
   useEffect(() => {
-    setActive(note.id === openNoteId);
-  }, [setActive, note, openNoteId]);
+    setActive(note.id === openNote?.id);
+  }, [setActive, note, openNote]);
 
   return (
     <ItemContainer active={active} onClick={handleOpenNote(note)}>
       <Icon />
-      <Text>{note.id}</Text>
+      <Text>{note.title}</Text>
     </ItemContainer>
   );
 };
