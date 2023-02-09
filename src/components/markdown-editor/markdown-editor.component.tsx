@@ -28,7 +28,7 @@ import {
   useHelpers,
   useRemirror,
 } from '@remirror/react';
-import 'remirror/styles/all.css';
+// import 'remirror/styles/all.css';
 import { MarkdownEditorProps as RemirrorMarkdownEditorProps } from '@remirror/react-editors/markdown';
 
 import { MarkdownEditorContainer } from './markdown-editor.styles';
