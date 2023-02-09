@@ -1,9 +1,13 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Note, NotesState } from './notes.types';
+import { Note } from './notes.types';
+
+export type NotesState = {
+  list: Note[];
+};
 
 const initialState: NotesState = {
-  list: JSON.parse(localStorage.getItem('bn/notes') || '[]'),
+  list: [],
 };
 
 export const notesSlice = createSlice({
@@ -13,7 +17,6 @@ export const notesSlice = createSlice({
     createNote: {
       reducer: (state: NotesState, action: PayloadAction<Note>) => {
         state.list.push(action.payload);
-        localStorage.setItem('bn/notes', JSON.stringify(state.list));
       },
       prepare: ({ title, content }) => {
         return {
@@ -31,7 +34,6 @@ export const notesSlice = createSlice({
       const { id } = action.payload;
 
       state.list = state.list.filter((note) => String(note.id) !== String(id));
-      localStorage.setItem('bn/notes', JSON.stringify(state.list));
     },
     updateNote: (state: NotesState, action: PayloadAction<Note>) => {
       const { id, title, content } = action.payload;
@@ -42,7 +44,6 @@ export const notesSlice = createSlice({
         existingNote.content = content;
         existingNote.updatedAt = Date.now();
       }
-      localStorage.setItem('bn/notes', JSON.stringify(state.list));
     },
   },
 });

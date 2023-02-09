@@ -5,7 +5,3 @@ export type Note = {
   createdAt: number;
   updatedAt: number;
 };
-
-export type NotesState = {
-  list: Note[];
-};
