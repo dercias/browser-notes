@@ -1,8 +1,9 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Note, NotesContext } from '../../context';
+import { Note, removeNote } from '../../store/notes';
 import { NoteDetailsToolbarContainer } from './note-details-toolbar.styles';
 
 type NoteDetailsProps = {
@@ -10,16 +11,17 @@ type NoteDetailsProps = {
 };
 
 export const NoteDetailsToobar: FC<NoteDetailsProps> = ({ note }) => {
-  const { removeNote } = useContext(NotesContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const removeNoteHandler = (note: Note) => () => {
-    removeNote(note);
+  const onRemoveNoteClicked = (note: Note) => () => {
+    dispatch(removeNote(note));
     navigate('/');
   };
+
   return (
     <NoteDetailsToolbarContainer>
-      <button title='Delete note' onClick={removeNoteHandler(note)}>
+      <button title='Delete note' onClick={onRemoveNoteClicked(note)}>
         <HiOutlineTrash />
       </button>
     </NoteDetailsToolbarContainer>

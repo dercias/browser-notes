@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-// import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { NotesProvider } from './context';
 import App from './App';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <NotesProvider>
+    <Provider store={store}>
       <App />
-    </NotesProvider>
+    </Provider>
   </React.StrictMode>
 );
 

@@ -1,25 +1,12 @@
-import { render, screen } from './test-utils/testing-library-utils';
+import {
+  render,
+  screen,
+  initialNotes,
+} from './test-utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
 test('clicking a note in the list shows its content in the editor', async () => {
-  const initialNotes = [
-    { id: 1, title: '', content: 'Lorem ipsum' },
-    {
-      id: 2,
-      title: 'Note #1',
-      content:
-        'Duis facilisis consectetur risus, ut tincidunt massa consequat at.',
-    },
-    {
-      id: 3,
-      title: 'Donec eget magna luctus',
-      content:
-        'Donec eget magna luctus, iaculis mi vitae, tristique odio. Mauris sed sapien at diam sollicitudin ornare nec pharetra lorem.',
-    },
-  ];
-  localStorage.setItem('bn/notes', JSON.stringify(initialNotes));
-
   const user = userEvent.setup();
 
   render(<App />);
