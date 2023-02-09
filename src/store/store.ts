@@ -1,10 +1,13 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+  PreloadedState,
+} from '@reduxjs/toolkit';
 import notesReducer from './notes/notes.slice';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
-import { NotesState } from './notes';
 
 const persistConfig = {
   key: 'root',
@@ -12,16 +15,21 @@ const persistConfig = {
   stateReconciler: autoMergeLevel2,
 };
 
-const store = configureStore({
-  reducer: combineReducers({
-    notes: persistReducer<NotesState, any>(persistConfig, notesReducer),
-  }),
-  devTools: process.env.NODE_ENV !== 'production',
-  middleware: [thunk],
+const rootReducer = combineReducers({
+  notes: notesReducer,
 });
 
-const persistor = persistStore(store);
+export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
+  return configureStore({
+    reducer: persistReducer<RootState, any>(persistConfig, rootReducer),
+    devTools: process.env.NODE_ENV !== 'production',
+    middleware: [thunk],
+    preloadedState,
+  });
+};
 
-export type RootState = ReturnType<typeof store.getState>;
+export const store = setupStore();
+export const persistor = persistStore(store);
 
-export { store, persistor };
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;

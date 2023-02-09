@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useCallback, useEffect } from 'react';
+import { FC, PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import jsx from 'refractor/lang/jsx.js';
 import typescript from 'refractor/lang/typescript.js';
 import { ExtensionPriority } from 'remirror';
@@ -28,10 +28,12 @@ import {
   useHelpers,
   useRemirror,
 } from '@remirror/react';
-
+import 'remirror/styles/all.css';
 import { MarkdownEditorProps as RemirrorMarkdownEditorProps } from '@remirror/react-editors/markdown';
+
 import { MarkdownEditorContainer } from './markdown-editor.styles';
 import { MarkdownEditorToolbar } from '../markdown-editor-toolbar/markdown-editor-toolbar.component';
+import { Note } from '../../store/notes';
 
 export interface OnChangeMarkdownProps {
   onChange: (markdown: string) => void;
@@ -54,17 +56,22 @@ const OnChangeMarkdown = ({ onChange }: OnChangeMarkdownProps): null => {
 };
 
 export type MarkdownEditorProps = {
+  content?: string;
+  note?: Note;
   onChange?: (value: string) => void;
 } & RemirrorMarkdownEditorProps;
 
 export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
-  placeholder,
+  placeholder = 'Start typing...',
   children,
-  initialContent = '',
-  autoFocus = false,
+  content = '',
+  autoFocus = true,
   onChange = () => {},
+  note,
   ...rest
 }) => {
+  const [openNote, setOpenNote] = useState<Note | undefined>();
+
   const extensions = useCallback(
     () => [
       new PlaceholderExtension({ placeholder }),
@@ -105,10 +112,13 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   };
 
   useEffect(() => {
-    manager.view.updateState(
-      manager.createState({ content: initialContent as string })
-    );
-  }, [initialContent, manager]);
+    if (openNote?.id !== note?.id) {
+      setOpenNote(note);
+      manager.view.updateState(
+        manager.createState({ content: note?.content as string })
+      );
+    }
+  }, [note, openNote, manager]);
 
   return (
     <ThemeProvider>
@@ -116,7 +126,7 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
         manager={manager}
         autoFocus={autoFocus}
         label='content'
-        placeholder='Start typing...'
+        placeholder={placeholder}
         {...rest}
       >
         <MarkdownEditorToolbar />

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, PropsWithChildren, useEffect, useState } from 'react';
+import { ChangeEvent, FC, PropsWithChildren } from 'react';
 import { useDispatch } from 'react-redux';
 import { useOpenNote } from '../../hooks';
 import { updateNote } from '../../store/notes';
@@ -8,39 +8,32 @@ import { EditorWrapper, NoteMeta, TitleInput } from './note-view.styles';
 
 export const NoteView: FC<PropsWithChildren> = ({ children }) => {
   const { openNote } = useOpenNote();
-  const [note, setNote] = useState(openNote);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (note?.id !== openNote?.id) {
-      setNote(openNote);
-    }
-  }, [openNote, note]);
-
   const onContentChange = (value: string) => {
-    if (note) {
-      dispatch(updateNote({ ...note, content: value }));
+    if (openNote) {
+      dispatch(updateNote({ ...openNote, content: value }));
     }
   };
 
   const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (note) {
-      dispatch(updateNote({ ...note, title: event.target.value }));
+    if (openNote) {
+      dispatch(updateNote({ ...openNote, title: event.target.value }));
     }
   };
 
-  return note ? (
+  return openNote ? (
     <EditorWrapper>
-      <NoteDetailsToobar note={note} />
+      <NoteDetailsToobar note={openNote} />
       <NoteMeta>
         <TitleInput
           placeholder='Note Title'
           type='text'
           onChange={onTitleChange}
-          value={note.title || ''}
+          value={openNote.title || ''}
         />
       </NoteMeta>
-      <MarkdownEditor initialContent={note.content} onChange={onContentChange}>
+      <MarkdownEditor note={openNote} onChange={onContentChange}>
         {children}
       </MarkdownEditor>
     </EditorWrapper>

@@ -1,32 +1,26 @@
 import { PropsWithChildren } from 'react';
-import {
-  combineReducers,
-  configureStore,
-  PreloadedState,
-} from '@reduxjs/toolkit';
+import { PreloadedState } from '@reduxjs/toolkit';
 import { render, RenderOptions } from '@testing-library/react';
-import storage from 'redux-persist/lib/storage';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { Provider } from 'react-redux';
-import { RootState, store } from '../store/store';
-import notesReducer, { NotesState } from '../store/notes/notes.slice';
-import { persistReducer } from 'redux-persist';
+import { RootState, setupStore, store } from '../store/store';
+import { BrowserRouter } from 'react-router-dom';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>;
   store?: typeof store;
 }
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  stateReconciler: autoMergeLevel2,
-};
-
 export const initialNotes = [
   {
-    id: '1',
+    id: '4',
     title: '',
+    content: '',
+    createdAt: 1675766577,
+    updatedAt: 1675766578,
+  },
+  {
+    id: '1',
+    title: 'Mauris sed sapien at diam sollicitudin',
     content: 'Lorem ipsum',
     createdAt: 1675766577,
     updatedAt: 1675766578,
@@ -55,18 +49,9 @@ const renderWithContext = (
     preloadedState = {
       notes: {
         list: initialNotes,
-        _persist: {
-          version: 0,
-          rehydrated: true,
-        },
       },
     },
-    store = configureStore({
-      reducer: combineReducers({
-        notes: persistReducer<NotesState, any>(persistConfig, notesReducer),
-      }),
-      preloadedState,
-    }),
+    store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) => {
@@ -77,8 +62,31 @@ const renderWithContext = (
   return render(ui, { wrapper: Wrapper, ...renderOptions });
 };
 
+const renderWithBrowser = (
+  ui: React.ReactElement,
+  {
+    preloadedState = {
+      notes: {
+        list: initialNotes,
+      },
+    },
+    store = setupStore(preloadedState),
+    ...renderOptions
+  }: ExtendedRenderOptions = {}
+) => {
+  const Wrapper = ({ children }: PropsWithChildren<{}>): JSX.Element => {
+    return (
+      <Provider store={store}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </Provider>
+    );
+  };
+
+  return render(ui, { wrapper: Wrapper, ...renderOptions });
+};
+
 // re-export everything
 export * from '@testing-library/react';
 
 // override render method
-export { renderWithContext as render };
+export { renderWithContext as render, renderWithBrowser };
