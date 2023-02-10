@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useOpenNote } from '../../hooks';
 import { updateNote } from '../../store/notes';
 import { MarkdownEditor } from '../markdown-editor/markdown-editor.component';
-import { NoteDetailsToobar } from '../note-details-toolbar/note-details-toolbar.component';
+import { NoteToobar } from '../note-details-toolbar/note-toolbar.component';
 import {
   EditorWrapper,
   NoteMeta,
@@ -35,7 +35,7 @@ export const NoteView: FC<PropsWithChildren> = ({ children }) => {
 
   return openNote ? (
     <EditorWrapper>
-      <NoteDetailsToobar note={openNote} />
+      <NoteToobar note={openNote} />
       <NoteMeta>
         <TitleWrapper>
           <TitleSpacer>{openNote.title}</TitleSpacer>

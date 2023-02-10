@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 
 import { Note, removeNote } from '../../store/notes';
 import {
-  NoteDetailsToolbarContainer,
+  NoteToolbarContainer,
   Toolbar,
   ToolbarEnd,
-} from './note-details-toolbar.styles';
+} from './note-toolbar.styles';
 
 type NoteDetailsProps = {
   note: Note;
 };
 
-export const NoteDetailsToobar: FC<NoteDetailsProps> = ({ note }) => {
+export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,14 +24,14 @@ export const NoteDetailsToobar: FC<NoteDetailsProps> = ({ note }) => {
   };
 
   return (
-    <NoteDetailsToolbarContainer>
+    <NoteToolbarContainer>
       <Toolbar>
         <ToolbarEnd>
           <button title='Delete note' onClick={onRemoveNoteClicked(note)}>
-            <HiOutlineTrash />
+            <HiOutlineTrash /> Delete note
           </button>
         </ToolbarEnd>
       </Toolbar>
-    </NoteDetailsToolbarContainer>
+    </NoteToolbarContainer>
   );
 };
