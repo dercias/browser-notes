@@ -65,7 +65,7 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
   placeholder = 'Start typing...',
   children,
   content = '',
-  autoFocus = true,
+  autoFocus = false,
   onChange = () => {},
   note,
   ...rest
