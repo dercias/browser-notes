@@ -4,7 +4,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Note, removeNote } from '../../store/notes';
-import { NoteDetailsToolbarContainer } from './note-details-toolbar.styles';
+import {
+  NoteDetailsToolbarContainer,
+  Toolbar,
+  ToolbarEnd,
+} from './note-details-toolbar.styles';
 
 type NoteDetailsProps = {
   note: Note;
@@ -21,9 +25,13 @@ export const NoteDetailsToobar: FC<NoteDetailsProps> = ({ note }) => {
 
   return (
     <NoteDetailsToolbarContainer>
-      <button title='Delete note' onClick={onRemoveNoteClicked(note)}>
-        <HiOutlineTrash />
-      </button>
+      <Toolbar>
+        <ToolbarEnd>
+          <button title='Delete note' onClick={onRemoveNoteClicked(note)}>
+            <HiOutlineTrash />
+          </button>
+        </ToolbarEnd>
+      </Toolbar>
     </NoteDetailsToolbarContainer>
   );
 };

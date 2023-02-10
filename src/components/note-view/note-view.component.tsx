@@ -4,7 +4,13 @@ import { useOpenNote } from '../../hooks';
 import { updateNote } from '../../store/notes';
 import { MarkdownEditor } from '../markdown-editor/markdown-editor.component';
 import { NoteDetailsToobar } from '../note-details-toolbar/note-details-toolbar.component';
-import { EditorWrapper, NoteMeta, TitleInput } from './note-view.styles';
+import {
+  EditorWrapper,
+  NoteMeta,
+  TitleInput,
+  TitleSpacer,
+  TitleWrapper,
+} from './note-view.styles';
 
 export const NoteView: FC<PropsWithChildren> = ({ children }) => {
   const { openNote } = useOpenNote();
@@ -16,9 +22,14 @@ export const NoteView: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
-  const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     if (openNote) {
-      dispatch(updateNote({ ...openNote, title: event.target.value }));
+      dispatch(
+        updateNote({
+          ...openNote,
+          title: event.target.value.replace(/[\r\n\v]+/g, ''),
+        })
+      );
     }
   };
 
@@ -26,12 +37,15 @@ export const NoteView: FC<PropsWithChildren> = ({ children }) => {
     <EditorWrapper>
       <NoteDetailsToobar note={openNote} />
       <NoteMeta>
-        <TitleInput
-          placeholder='Note Title'
-          type='text'
-          onChange={onTitleChange}
-          value={openNote.title || ''}
-        />
+        <TitleWrapper>
+          <TitleSpacer>{openNote.title}</TitleSpacer>
+          <TitleInput
+            rows={1}
+            placeholder='Note Title'
+            onChange={onTitleChange}
+            value={openNote.title || ''}
+          />
+        </TitleWrapper>
       </NoteMeta>
       <MarkdownEditor note={openNote} onChange={onContentChange}>
         {children}

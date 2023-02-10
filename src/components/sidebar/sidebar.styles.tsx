@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import tw from 'twin.macro';
 
 export const SidebarContainer = styled.aside(
-  tw`w-64 border-neutral-200 border-r bg-white fixed left-0 h-screen overflow-auto`
+  tw`w-64 border-neutral-200 border-r bg-neutral-100 fixed left-0 h-screen overflow-auto`
 );
 
 export const SidebarHeader = styled.div(

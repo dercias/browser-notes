@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 import tw, { theme } from 'twin.macro';
 
 export const MarkdownEditorContainer = styled.div(() => [
-  tw`prose lg:prose-xl focus:outline-0 mx-6`,
+  tw`prose focus:outline-0 mx-6`,
   `
   .remirror-editor-wrapper {
     padding: 0;

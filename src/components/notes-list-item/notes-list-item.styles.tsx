@@ -7,13 +7,13 @@ type ItemContainerProps = {
 };
 
 export const ItemContainer = styled.li<ItemContainerProps>(({ active }) => [
-  tw`flex flex-row p-2 mb-2
+  tw`flex flex-row p-2 mb-1
   leading-5 text-neutral-800
   rounded-md
   hover:cursor-pointer `,
-  active && tw`bg-neutral-100`,
+  active && tw`bg-neutral-200`,
 ]);
 
-export const Text = styled.div(tw`flex-1 px-2 text-sm `);
+export const Text = styled.div(tw`flex-1 px-2 text-sm truncate`);
 
 export const Icon = styled(HiDocumentText)(tw`text-neutral-400 text-xl `);
