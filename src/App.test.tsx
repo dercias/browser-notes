@@ -1,16 +1,51 @@
-import {
-  render,
-  screen,
-  initialNotes,
-} from './test-utils/testing-library-utils';
+import { render, screen } from './test-utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
 import App from './App';
-import { logRoles } from '@testing-library/react';
+
+const initialNotes = [
+  {
+    id: '4',
+    title: '',
+    content: '',
+    createdAt: 1675766577,
+    updatedAt: 1675766578,
+  },
+  {
+    id: '1',
+    title: 'Mauris sed sapien at diam sollicitudin',
+    content: 'Lorem ipsum',
+    createdAt: 1675766577,
+    updatedAt: 1675766578,
+  },
+  {
+    id: '2',
+    title: 'Note #1',
+    content:
+      'Duis facilisis consectetur risus, ut tincidunt massa consequat at.',
+    createdAt: 1675766579,
+    updatedAt: 1675766580,
+  },
+  {
+    id: '3',
+    title: 'Donec eget magna luctus',
+    content:
+      'Donec eget magna luctus, iaculis mi vitae, tristique odio. Mauris sed sapien at diam sollicitudin ornare nec pharetra lorem.',
+    createdAt: 1675766591,
+    updatedAt: 1675766598,
+  },
+];
+
+const initialState = {
+  notes: { list: initialNotes },
+  settings: {
+    isFirstRun: false,
+  },
+};
 
 test('clicking a note in the list should show its content in the editor', async () => {
   const user = userEvent.setup();
 
-  render(<App />);
+  render(<App />, { preloadedState: initialState });
 
   const listItems = screen.getAllByRole('listitem');
   const listItemText = listItems.map((li) => li.textContent);
@@ -39,7 +74,7 @@ test('clicking a note in the list should show its content in the editor', async 
 test('clicking add note button should open a new note', async () => {
   const user = userEvent.setup();
 
-  render(<App />);
+  render(<App />, { preloadedState: initialState });
 
   const listItems = screen.getAllByRole('listitem');
   const noteIdx = 1;
