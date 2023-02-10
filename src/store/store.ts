@@ -4,6 +4,7 @@ import {
   PreloadedState,
 } from '@reduxjs/toolkit';
 import notesReducer from './notes/notes.slice';
+import settingsReducer from './settings/settings.slice';
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
@@ -17,6 +18,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   notes: notesReducer,
+  settings: settingsReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
