@@ -3,6 +3,7 @@ import tw, { theme } from 'twin.macro';
 
 export const MarkdownEditorToolbarContainer = styled.div(() => [
   tw`flex sticky top-0 w-full h-12 px-6 py-2
+      bg-white
      border-neutral-200 border-b`,
   `
   > div {
