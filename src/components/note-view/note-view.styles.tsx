@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
-export const EditorWrapper = styled.div(tw`relative `);
+export const EditorWrapper = styled.div(tw`relative xl:mx-20 mx-12`);
 
 export const NoteMeta = styled.div(tw`my-6 flex flex-col px-6`);
 
-const titleStyling = tw`text-6xl font-black border-0
+const titleStyling = tw`text-4xl lg:text-5xl xl:text-6xl font-bold border-0
 placeholder-neutral-300 focus:outline-none `;
 
 export const TitleWrapper = styled.div(tw`grid `);
