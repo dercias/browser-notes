@@ -55,7 +55,7 @@ export const Home = () => {
       );
       dispatch(
         createNote({
-          id,
+          id: nanoid(),
           content: welcomeContent,
           title: 'A second note',
         })
