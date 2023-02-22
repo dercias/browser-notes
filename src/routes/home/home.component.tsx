@@ -50,6 +50,14 @@ export const Home = () => {
           id,
           content: welcomeContent,
           title: 'Hello world!',
+          starred: true,
+        })
+      );
+      dispatch(
+        createNote({
+          id,
+          content: welcomeContent,
+          title: 'A second note',
         })
       );
       navigate(`/${id}`);
