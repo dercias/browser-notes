@@ -18,12 +18,18 @@ export const notesSlice = createSlice({
       reducer: (state: NotesState, action: PayloadAction<Note>) => {
         state.list.push(action.payload);
       },
-      prepare: ({ id = nanoid(), title = '', content = '' }) => {
+      prepare: ({
+        id = nanoid(),
+        title = '',
+        content = '',
+        starred = false,
+      }) => {
         return {
           payload: {
             id,
             title,
             content,
+            starred,
             createdAt: Date.now(),
             updatedAt: Date.now(),
           },
