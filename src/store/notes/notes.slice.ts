@@ -36,12 +36,13 @@ export const notesSlice = createSlice({
       state.list = state.list.filter((note) => String(note.id) !== String(id));
     },
     updateNote: (state: NotesState, action: PayloadAction<Note>) => {
-      const { id, title, content } = action.payload;
+      const { id, title, content, starred } = action.payload;
       let existingNote = state.list.find((note) => note.id === id);
 
       if (existingNote) {
         existingNote.title = title;
         existingNote.content = content;
+        existingNote.starred = starred;
         existingNote.updatedAt = Date.now();
       }
     },

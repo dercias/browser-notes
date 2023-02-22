@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOpenNote } from '../../hooks';
 import { Note } from '../../store/notes';
+import { Star } from '../star-button';
 import { Icon, ItemContainer, Text } from './notes-list-item.styles';
 
 type NotesListItemProps = {
@@ -27,6 +28,7 @@ export const NotesListItem: FC<NotesListItemProps> = ({ note }) => {
     <ItemContainer active={active} onClick={handleOpenNote(note)}>
       <Icon />
       <Text>{note.title}</Text>
+      {note.starred && <Star />}
     </ItemContainer>
   );
 };

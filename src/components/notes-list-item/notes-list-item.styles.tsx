@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
-import { HiDocumentText } from 'react-icons/hi';
+import { HiDocumentText, HiStar } from 'react-icons/hi';
 
 type ItemContainerProps = {
   active: boolean;
@@ -17,3 +17,7 @@ export const ItemContainer = styled.li<ItemContainerProps>(({ active }) => [
 export const Text = styled.div(tw`flex-1 px-2 text-sm truncate`);
 
 export const Icon = styled(HiDocumentText)(tw`text-neutral-400 w-5 h-5`);
+
+export const Star = styled(HiStar)(tw`
+  w-5 h-5 ml-2
+text-amber-400`);

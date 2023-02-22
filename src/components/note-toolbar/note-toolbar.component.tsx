@@ -2,8 +2,9 @@ import { FC } from 'react';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Note, removeNote } from '../../store/notes';
+import { Note, removeNote, updateNote } from '../../store/notes';
 import { Dropdown, DropdownOption } from '../dropdown/dropdown.component';
+import { StarButton } from '../star-button/star-button.component';
 import {
   DocumentIcon,
   NoteToolbarContainer,
@@ -20,9 +21,18 @@ export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onRemoveNoteClicked = (note: Note) => () => {
+  const onRemoveNoteClick = () => {
     dispatch(removeNote(note));
     navigate('/');
+  };
+
+  const onStarButtonClick = () => {
+    dispatch(
+      updateNote({
+        ...note,
+        starred: !note.starred,
+      })
+    );
   };
 
   return (
@@ -31,10 +41,15 @@ export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
         <ToolbarStart>
           <DocumentIcon />
           {note.title}
+          <StarButton
+            checked={note.starred}
+            onClick={onStarButtonClick}
+            className='ml-4'
+          />
         </ToolbarStart>
         <ToolbarEnd>
           <Dropdown>
-            <DropdownOption onClick={onRemoveNoteClicked(note)}>
+            <DropdownOption onClick={onRemoveNoteClick}>
               <span className='text-red-500 flex'>
                 <HiOutlineTrash className='mr-2 w-4 h-4' />
                 Delete Note
