@@ -41,13 +41,13 @@ export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
         <ToolbarStart>
           <DocumentIcon />
           {note.title}
+        </ToolbarStart>
+        <ToolbarEnd>
           <StarButton
             checked={note.starred}
             onClick={onStarButtonClick}
-            className='ml-4'
+            className='mr-2'
           />
-        </ToolbarStart>
-        <ToolbarEnd>
           <Dropdown>
             <DropdownOption onClick={onRemoveNoteClick}>
               <span className='text-red-500 flex'>
