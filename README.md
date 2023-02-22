@@ -21,5 +21,7 @@ browser-notes is built using:
 - React
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Redux Persist](https://www.npmjs.com/package/redux-persist)
-- [Tailwind CSS](https://tailwindcss.com/)
 - [Remirror](https://remirror.io/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Tailwind Elements](https://tailwind-elements.com/)
+- [React Icons](https://react-icons.github.io/)

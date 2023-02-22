@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useOpenNote } from '../../hooks';
 import { updateNote } from '../../store/notes';
 import { MarkdownEditor } from '../markdown-editor/markdown-editor.component';
-import { NoteToobar } from '../note-details-toolbar/note-toolbar.component';
+import { NoteToobar } from '../note-toolbar/note-toolbar.component';
 import {
   EditorWrapper,
   NoteMeta,

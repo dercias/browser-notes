@@ -16,4 +16,4 @@ export const ItemContainer = styled.li<ItemContainerProps>(({ active }) => [
 
 export const Text = styled.div(tw`flex-1 px-2 text-sm truncate`);
 
-export const Icon = styled(HiDocumentText)(tw`text-neutral-400 text-xl `);
+export const Icon = styled(HiDocumentText)(tw`text-neutral-400 w-5 h-5`);
