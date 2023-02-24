@@ -1,13 +1,20 @@
-import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSelector,
+  createSlice,
+  nanoid,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Note } from './notes.types';
+import { Note, NoteFilter } from './notes.types';
 
 export type NotesState = {
   list: Note[];
+  filters?: NoteFilter;
 };
 
 const initialState: NotesState = {
   list: [],
+  filters: {} as NoteFilter,
 };
 
 export const notesSlice = createSlice({
@@ -17,6 +24,7 @@ export const notesSlice = createSlice({
     createNote: {
       reducer: (state: NotesState, action: PayloadAction<Note>) => {
         state.list.push(action.payload);
+        state.filters = {};
       },
       prepare: ({
         id = nanoid(),
@@ -36,11 +44,6 @@ export const notesSlice = createSlice({
         };
       },
     },
-    removeNote: (state: NotesState, action: PayloadAction<Note>) => {
-      const { id } = action.payload;
-
-      state.list = state.list.filter((note) => String(note.id) !== String(id));
-    },
     updateNote: (state: NotesState, action: PayloadAction<Note>) => {
       const { id, title, content, starred } = action.payload;
       let existingNote = state.list.find((note) => note.id === id);
@@ -52,14 +55,56 @@ export const notesSlice = createSlice({
         existingNote.updatedAt = Date.now();
       }
     },
+    removeNote: (state: NotesState, action: PayloadAction<Note>) => {
+      const { id } = action.payload;
+      let noteToDelete = state.list.find((note) => note.id === id);
+
+      if (noteToDelete) {
+        noteToDelete.deleted = true;
+      }
+    },
+    restoreNote: (state: NotesState, action: PayloadAction<Note>) => {
+      const { id } = action.payload;
+      let noteToRestore = state.list.find((note) => note.id === id);
+
+      if (noteToRestore) {
+        noteToRestore.deleted = false;
+      }
+    },
+    filterBy: (state: NotesState, action: PayloadAction<NoteFilter>) => {
+      const { showStarred, showDeleted } = action.payload;
+
+      state.filters = state.filters || {}; // initialize
+      state.filters.showStarred = Boolean(showStarred);
+      state.filters.showDeleted = Boolean(showDeleted);
+    },
+    clearFilters: (state: NotesState) => {
+      state.filters = {};
+    },
   },
 });
 
-export const { createNote, removeNote, updateNote } = notesSlice.actions;
+export const {
+  createNote,
+  removeNote,
+  restoreNote,
+  updateNote,
+  filterBy,
+  clearFilters,
+} = notesSlice.actions;
 
 export const selectAllNotes = (state: RootState) => state.notes.list;
 
-export const selectNoteById = (id: string) => (state: RootState) =>
-  state.notes.list.find((note) => String(note.id) === String(id));
+export const selectNoteById = (id: string) =>
+  createSelector([selectAllNotes], (notes: Note[]) =>
+    notes.find((note) => note.id === id)
+  );
+
+export const selectStarredNotes = createSelector(
+  [selectAllNotes],
+  (notes: Note[]) => notes.filter((note: Note) => note.starred)
+);
+
+export const selectFilterBy = (state: RootState) => state.notes.filters;
 
 export default notesSlice.reducer;

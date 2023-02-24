@@ -4,7 +4,7 @@ import { Home } from './routes';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/note',
     element: <Home />,
     children: [{ path: ':id', element: <NoteView /> }],
   },

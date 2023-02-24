@@ -19,5 +19,5 @@ export const Text = styled.div(tw`flex-1 px-2 text-sm truncate`);
 export const Icon = styled(HiDocumentText)(tw`text-neutral-400 w-5 h-5`);
 
 export const Star = styled(HiStar)(tw`
-  w-5 h-5 ml-2
+  relative w-5 h-5 ml-2
 text-amber-400`);

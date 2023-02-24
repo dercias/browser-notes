@@ -2,8 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useOpenNote } from '../../hooks';
 import { Note } from '../../store/notes';
-import { Star } from '../star-button';
-import { Icon, ItemContainer, Text } from './notes-list-item.styles';
+import { Icon, ItemContainer, Text, Star } from './notes-list-item.styles';
 
 type NotesListItemProps = {
   note: Note;
@@ -16,7 +15,7 @@ export const NotesListItem: FC<NotesListItemProps> = ({ note }) => {
 
   const handleOpenNote = (note: Note) => () => {
     if (note) {
-      navigate(`/${note.id}`);
+      navigate(`/note/${note.id}`);
     }
   };
 
