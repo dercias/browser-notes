@@ -24,7 +24,7 @@ export const NotesList = () => {
   }, [notes, filters]);
 
   return (
-    <NotesListContainer>
+    <NotesListContainer data-testid='notes-list'>
       {visibleNotes.map((note: Note) => (
         <NotesListItem key={note.id} note={note} />
       ))}

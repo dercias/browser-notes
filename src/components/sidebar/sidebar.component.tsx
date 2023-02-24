@@ -32,7 +32,7 @@ export const Sidebar = () => {
   const onAddNoteClicked = () => {
     const id = nanoid();
     dispatch(createNote({ id }));
-    navigate(`/${id}`);
+    navigate(`/note/${id}`);
   };
 
   const onShowStarredClick = () => {
@@ -81,7 +81,11 @@ export const Sidebar = () => {
         </SidebarNav>
       </SidebarHeader>
       <SidebarButtons>
-        <SidebarButton title='Add Note' onClick={onAddNoteClicked}>
+        <SidebarButton
+          title='Add Note'
+          data-testid='add-note-button'
+          onClick={onAddNoteClicked}
+        >
           <HiPlus />
         </SidebarButton>
       </SidebarButtons>

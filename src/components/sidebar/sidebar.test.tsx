@@ -1,6 +1,7 @@
 import {
   renderWithBrowser,
   screen,
+  within,
 } from '../../test-utils/testing-library-utils';
 import { Sidebar } from './sidebar.component';
 import userEvent from '@testing-library/user-event';
@@ -27,9 +28,10 @@ test('clicking add note button should create a new list item', async () => {
 
   renderWithBrowser(<Sidebar />, { preloadedState: initialState });
 
-  const addButton = screen.getByRole('button', { name: 'Add Note' });
+  const addButton = screen.getByTestId('add-note-button');
   await user.click(addButton);
 
-  const listItems2 = screen.getAllByRole('listitem');
-  expect(listItems2).toHaveLength(initialNotes.length + 1);
+  const list = screen.getByTestId('notes-list');
+  const listItems = within(list).getAllByRole('listitem');
+  expect(listItems).toHaveLength(initialNotes.length + 1);
 });

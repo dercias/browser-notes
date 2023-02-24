@@ -1,4 +1,4 @@
-import { render, screen } from './test-utils/testing-library-utils';
+import { render, screen, within } from './test-utils/testing-library-utils';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
@@ -47,7 +47,8 @@ test('clicking a note in the list should show its content in the editor', async 
 
   render(<App />, { preloadedState: initialState });
 
-  const listItems = screen.getAllByRole('listitem');
+  const list = screen.getByTestId('notes-list');
+  const listItems = within(list).getAllByRole('listitem');
   const listItemText = listItems.map((li) => li.textContent);
   expect(listItemText).toEqual(initialNotes.map((n) => n.title));
 
@@ -76,7 +77,8 @@ test('clicking add note button should open a new note', async () => {
 
   render(<App />, { preloadedState: initialState });
 
-  const listItems = screen.getAllByRole('listitem');
+  const list = screen.getByTestId('notes-list');
+  const listItems = within(list).getAllByRole('listitem');
   const noteIdx = 1;
   await user.click(listItems[noteIdx]);
 
