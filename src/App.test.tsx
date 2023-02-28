@@ -55,7 +55,7 @@ test('clicking a note in the list should show its content in the editor', async 
   const noteIdx = 1;
   await user.click(listItems[noteIdx]);
 
-  const titleInput = screen.getByPlaceholderText(/note title/i);
+  const titleInput = screen.getByPlaceholderText(/^note title$/i);
   expect(titleInput).toHaveValue(initialNotes[noteIdx].title);
 
   const contentEditor = screen.getByRole('textbox', { name: /content/i });
@@ -82,7 +82,7 @@ test('clicking add note button should open a new note', async () => {
   const noteIdx = 1;
   await user.click(listItems[noteIdx]);
 
-  const titleInput = screen.getByPlaceholderText(/note title/i);
+  const titleInput = screen.getByPlaceholderText(/^note title$/i);
   expect(titleInput).toHaveValue(initialNotes[noteIdx].title);
 
   const contentEditor = screen.getByRole('textbox', { name: /content/i });
