@@ -11,4 +11,5 @@ export type Note = {
 export type NoteFilter = {
   showStarred?: boolean;
   showDeleted?: boolean;
+  searchString?: string;
 };

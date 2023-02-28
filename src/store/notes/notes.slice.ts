@@ -72,11 +72,12 @@ export const notesSlice = createSlice({
       }
     },
     filterBy: (state: NotesState, action: PayloadAction<NoteFilter>) => {
-      const { showStarred, showDeleted } = action.payload;
+      const { showStarred, showDeleted, searchString } = action.payload;
 
       state.filters = state.filters || {}; // initialize
       state.filters.showStarred = Boolean(showStarred);
       state.filters.showDeleted = Boolean(showDeleted);
+      state.filters.searchString = searchString;
     },
     clearFilters: (state: NotesState) => {
       state.filters = {};

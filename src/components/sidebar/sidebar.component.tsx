@@ -1,3 +1,4 @@
+import { ChangeEvent, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearFilters, createNote, filterBy } from '../../store/notes';
@@ -16,7 +17,7 @@ import { Logo } from '../logo/logo.component';
 import { nanoid } from '@reduxjs/toolkit';
 import { HiPlus } from 'react-icons/hi';
 import { SidebarButton } from '../sidebar-button/sidebar-button.component';
-import { useState } from 'react';
+import { SearchInput } from '../search-input/search-input.component';
 
 const NAV_ITEMS = {
   ALL_NOTES: 'All Notes',
@@ -25,6 +26,7 @@ const NAV_ITEMS = {
 };
 
 export const Sidebar = () => {
+  const [searchString, setSearchString] = useState('');
   const [selectedNavItem, setSelectedNavItem] = useState(NAV_ITEMS.ALL_NOTES);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,6 +53,15 @@ export const Sidebar = () => {
   };
 
   const isSelected = (navItem: string) => navItem === selectedNavItem;
+
+  const onSearchInputChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setSearchString(event.target.value);
+
+  const onSearchInputClear = () => setSearchString('');
+
+  useEffect(() => {
+    dispatch(filterBy({ searchString }));
+  }, [searchString, dispatch]);
 
   return (
     <SidebarContainer>
@@ -81,6 +92,12 @@ export const Sidebar = () => {
         </SidebarNav>
       </SidebarHeader>
       <SidebarButtons>
+        <SearchInput
+          value={searchString}
+          onClear={onSearchInputClear}
+          onChange={onSearchInputChange}
+          placeholder='Search note title'
+        />
         <SidebarButton
           title='Add Note'
           data-testid='add-note-button'

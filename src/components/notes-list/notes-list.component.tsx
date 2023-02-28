@@ -10,16 +10,23 @@ export const NotesList = () => {
   const filters = useSelector(selectFilterBy);
 
   useEffect(() => {
-    const notDeletedNotes = notes.filter((note) => !note.deleted);
+    const { showDeleted, showStarred, searchString } = filters || {};
 
-    if (filters?.showDeleted) {
+    const notDeletedNotes = notes.filter((note) => !note.deleted);
+    const searchedNotes = notDeletedNotes.filter(({ title }) =>
+      searchString
+        ? title && title.search(new RegExp(searchString, 'i')) > -1
+        : true
+    );
+
+    if (showDeleted) {
       setVisibleNotes(notes.filter((note) => note.deleted));
       return;
     }
-    if (filters?.showStarred) {
+    if (showStarred) {
       setVisibleNotes(notDeletedNotes.filter((note) => note.starred));
     } else {
-      setVisibleNotes(notDeletedNotes);
+      setVisibleNotes(searchedNotes);
     }
   }, [notes, filters]);
 
