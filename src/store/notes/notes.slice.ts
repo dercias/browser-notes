@@ -26,32 +26,30 @@ export const notesSlice = createSlice({
         state.list.push(action.payload);
         state.filters = {};
       },
-      prepare: ({
-        id = nanoid(),
-        title = '',
-        content = '',
-        starred = false,
-      }) => {
+      prepare: ({ id = nanoid(), ...rest }) => {
         return {
           payload: {
             id,
-            title,
-            content,
-            starred,
             createdAt: Date.now(),
             updatedAt: Date.now(),
+            ...rest,
           },
         };
       },
     },
     updateNote: (state: NotesState, action: PayloadAction<Note>) => {
-      const { id, title, content, starred } = action.payload;
-      let existingNote = state.list.find((note) => note.id === id);
+      const payload = action.payload;
+
+      let existingNote = state.list.find((note) => note.id === payload.id);
 
       if (existingNote) {
-        existingNote.title = title;
-        existingNote.content = content;
-        existingNote.starred = starred;
+        const keys = Object.keys(payload) as Array<keyof typeof payload>;
+
+        keys.forEach(<K extends keyof typeof payload>(key: K) => {
+          if (existingNote) {
+            existingNote[key] = action.payload[key];
+          }
+        });
         existingNote.updatedAt = Date.now();
       }
     },
