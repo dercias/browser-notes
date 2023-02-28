@@ -12,5 +12,7 @@ test('welcome note is shown on first run', async () => {
   const listItems = within(list).getAllByRole('listitem');
 
   expect(listItems[0]).toHaveTextContent(/hello world/i);
-  expect(listItems[1]).toHaveTextContent(/A second note/i);
+  expect(listItems[1]).toHaveTextContent(
+    /Mox morte hostiliter eripitur profundi poenaeque es/i
+  );
 });
