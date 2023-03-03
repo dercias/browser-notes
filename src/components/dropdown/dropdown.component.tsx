@@ -1,10 +1,17 @@
-import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
+import {
+  ButtonHTMLAttributes,
+  FC,
+  PropsWithChildren,
+  createRef,
+  useState,
+} from 'react';
 import {
   DropdownButton,
   DropdownIcon,
   DropdownList,
   DropdownOptionButton,
 } from './dropdown.styles';
+import { createPopper } from '@popperjs/core';
 
 export const DropdownOption: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
   onClick = () => {},
@@ -20,28 +27,38 @@ export const DropdownOption: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
 };
 
 export const Dropdown: FC<PropsWithChildren> = ({ children }) => {
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
+
+  const btnDropdownRef = createRef<HTMLButtonElement>();
+  const popoverDropdownRef = createRef<HTMLUListElement>();
+
+  const onButtonClick = () => {
+    console.log({ dropdownPopoverShow });
+    if (dropdownPopoverShow) {
+      createPopper(btnDropdownRef.current!, popoverDropdownRef.current!, {
+        placement: 'bottom-start',
+      });
+    }
+    setDropdownPopoverShow(!dropdownPopoverShow);
+  };
+
   return (
-    <div className='flex justify-center'>
-      <div>
-        <div className='relative' data-te-dropdown-ref>
-          <DropdownButton
-            type='button'
-            id='dropdownMenuButton1'
-            data-te-dropdown-toggle-ref
-            aria-expanded='false'
-            data-te-ripple-init
-            data-te-ripple-color='light'
-          >
-            <DropdownIcon />
-          </DropdownButton>
-          <DropdownList
-            aria-labelledby='dropdownMenuButton1'
-            data-te-dropdown-menu-ref
-          >
-            {children}
-          </DropdownList>
-        </div>
+    <>
+      <div className='flex justify-center'>
+        <DropdownButton
+          type='button'
+          ref={btnDropdownRef}
+          onClick={onButtonClick}
+        >
+          <DropdownIcon />
+        </DropdownButton>
+        <DropdownList
+          ref={popoverDropdownRef}
+          className={dropdownPopoverShow ? 'block ' : 'hidden '}
+        >
+          {children}
+        </DropdownList>
       </div>
-    </div>
+    </>
   );
 };
