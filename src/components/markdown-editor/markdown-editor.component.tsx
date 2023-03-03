@@ -19,6 +19,7 @@ import {
   StrikeExtension,
   TableExtension,
   TrailingNodeExtension,
+  ImageExtension,
 } from 'remirror/extensions';
 import {
   EditorComponent,
@@ -98,6 +99,7 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
        * e.g. in a list item
        */
       new HardBreakExtension(),
+      new ImageExtension(),
     ],
     [placeholder]
   );

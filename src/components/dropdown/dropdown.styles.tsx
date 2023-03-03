@@ -17,5 +17,10 @@ export const DropdownList = styled.ul(tw`
   text-left text-base`);
 
 export const DropdownOptionButton = styled.button(tw`
-  flex items-center w-full py-2 px-4 bg-transparent
-  text-sm font-normal whitespace-nowrap `);
+  flex items-center w-full py-2 px-4
+  bg-transparent  hover:bg-neutral-100
+  text-sm font-normal text-neutral-700
+  font-mono whitespace-nowrap
+  active:text-neutral-800 active:no-underline
+  disabled:pointer-events-none
+  disabled:bg-transparent disabled:text-neutral-400`);

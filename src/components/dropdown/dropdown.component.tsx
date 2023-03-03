@@ -33,7 +33,6 @@ export const Dropdown: FC<PropsWithChildren> = ({ children }) => {
   const popoverDropdownRef = createRef<HTMLUListElement>();
 
   const onButtonClick = () => {
-    console.log({ dropdownPopoverShow });
     if (dropdownPopoverShow) {
       createPopper(btnDropdownRef.current!, popoverDropdownRef.current!, {
         placement: 'bottom-start',
