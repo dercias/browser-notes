@@ -1,26 +1,29 @@
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import styled from 'styled-components/macro';
 import tw from 'twin.macro';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
-export const DropdownButton = styled.button(tw`
-  px-6 pt-2.5 pb-2 bg-none text-left `);
+export const DropdownMenuRoot = styled(DropdownMenu.Root)(tw``);
 
-export const DropdownIcon = styled(HiOutlineDotsHorizontal)(
-  tw`text-neutral-600 w-5 h-5`
+export const DropdownMenuTrigger = styled(DropdownMenu.Trigger)(tw``);
+
+export const DropdownMenuPortal = styled(DropdownMenu.Portal)(tw``);
+
+export const DropdownMenuContent = styled(DropdownMenu.Content)(
+  tw`min-w-[220px] bg-white rounded-md p-[5px]
+  shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]
+  will-change-[opacity,transform]
+  data-[side=top]:animate-slideDownAndFade
+  data-[side=right]:animate-slideLeftAndFade
+  data-[side=bottom]:animate-slideUpAndFade
+  data-[side=left]:animate-slideRightAndFade`
 );
 
-export const DropdownList = styled.ul(tw`
-  absolute z-[1000] m-0 float-left min-w-[12rem]
-  overflow-hidden
-  list-none border-neutral-50 border
-  bg-white shadow-lg rounded
-  text-left text-base`);
-
-export const DropdownOptionButton = styled.button(tw`
-  flex items-center w-full py-2 px-4
-  bg-transparent  hover:bg-neutral-100
-  text-sm font-normal text-neutral-700
-  font-mono whitespace-nowrap
-  active:text-neutral-800 active:no-underline
-  disabled:pointer-events-none
-  disabled:bg-transparent disabled:text-neutral-400`);
+export const DropdownMenuItem = styled(DropdownMenu.Item)(
+  tw`text-[13px] leading-none text-neutral-700 rounded-[3px]
+  flex items-center h-[25px] px-[5px] relative pl-[25px]
+  select-none outline-none
+  data-[disabled]:text-neutral-400
+  data-[disabled]:pointer-events-none
+  data-[highlighted]:bg-neutral-300
+  data-[highlighted]:text-neutral-800`
+);

@@ -3,10 +3,18 @@ import { HiOutlineTrash, HiUpload } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Note, removeNote, restoreNote, updateNote } from '../../store/notes';
-import { Dropdown, DropdownOption } from '../dropdown/dropdown.component';
+import {
+  DropdownMenuContent,
+  DropdownMenuPortal,
+  DropdownMenuItem,
+  DropdownMenuRoot,
+  DropdownMenuTrigger,
+} from '../dropdown/';
 import { StarButton } from '../star-button/star-button.component';
 import {
   DocumentIcon,
+  DropdownButton,
+  DropdownIcon,
   NoteToolbarContainer,
   Toolbar,
   ToolbarEnd,
@@ -53,24 +61,33 @@ export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
             onClick={onStarButtonClick}
             className='mr-2'
           />
-          <Dropdown>
-            {!note.deleted && (
-              <DropdownOption onClick={onRemoveNoteClick}>
-                <span className='text-red-500 flex'>
-                  <HiOutlineTrash className='mr-2 w-4 h-4' />
-                  Delete Note
-                </span>
-              </DropdownOption>
-            )}
-            {note.deleted && (
-              <DropdownOption onClick={onRestoreNoteClick}>
-                <span className=' flex'>
-                  <HiUpload className='mr-2 w-4 h-4' />
-                  Remove from Trash
-                </span>
-              </DropdownOption>
-            )}
-          </Dropdown>
+          <DropdownMenuRoot>
+            <DropdownMenuTrigger asChild>
+              <DropdownButton type='button'>
+                <DropdownIcon />
+              </DropdownButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuContent>
+                {!note.deleted && (
+                  <DropdownMenuItem onClick={onRemoveNoteClick}>
+                    <span className='text-red-500 flex'>
+                      <HiOutlineTrash className='mr-2 w-4 h-4' />
+                      Delete Note
+                    </span>
+                  </DropdownMenuItem>
+                )}
+                {note.deleted && (
+                  <DropdownMenuItem onClick={onRestoreNoteClick}>
+                    <span className=' flex'>
+                      <HiUpload className='mr-2 w-4 h-4' />
+                      Remove from Trash
+                    </span>
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenuPortal>
+          </DropdownMenuRoot>
         </ToolbarEnd>
       </Toolbar>
     </NoteToolbarContainer>
