@@ -2,8 +2,8 @@ import { useRef, InputHTMLAttributes, FC } from 'react';
 import {
   ClearButton,
   CloseIcon,
-  Input,
   InputContainer,
+  StyledInput as Input,
 } from './search-input.styles';
 
 type SearchInputProps = {

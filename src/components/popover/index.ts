@@ -1,9 +1,1 @@
-export {
-  PopoverRoot,
-  PopoverTrigger,
-  PopoverAnchor,
-  PopoverPortal,
-  PopoverContent,
-  PopoverArrow,
-  PopoverClose,
-} from './popover.styling';
+export { Popover, PopoverTrigger, PopoverContent } from './popover.component';

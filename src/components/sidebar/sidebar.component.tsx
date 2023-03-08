@@ -16,8 +16,8 @@ import {
 import { Logo } from '../logo/logo.component';
 import { nanoid } from '@reduxjs/toolkit';
 import { HiPlus } from 'react-icons/hi';
-import { SidebarButton } from '../sidebar-button/sidebar-button.component';
 import { SearchInput } from '../search-input/search-input.component';
+import { Button } from '../button';
 
 const NAV_ITEMS = {
   ALL_NOTES: 'All Notes',
@@ -98,13 +98,14 @@ export const Sidebar = () => {
           onChange={onSearchInputChange}
           placeholder='Search note title'
         />
-        <SidebarButton
+        <Button
           title='Add Note'
+          variant='ghost'
           data-testid='add-note-button'
           onClick={onAddNoteClicked}
         >
           <HiPlus />
-        </SidebarButton>
+        </Button>
       </SidebarButtons>
       <NotesList />
     </SidebarContainer>

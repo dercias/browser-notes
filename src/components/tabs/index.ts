@@ -1,1 +1,1 @@
-export { TabsRoot, TabsList, TabsTrigger, TabsContent } from './tabs.styling';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs.component';

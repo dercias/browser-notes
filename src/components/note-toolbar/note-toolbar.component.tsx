@@ -7,7 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuPortal,
   DropdownMenuItem,
-  DropdownMenuRoot,
+  DropdownMenu,
   DropdownMenuTrigger,
 } from '../dropdown/';
 import { StarButton } from '../star-button/star-button.component';
@@ -61,7 +61,7 @@ export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
             onClick={onStarButtonClick}
             className='mr-2'
           />
-          <DropdownMenuRoot>
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <DropdownButton type='button'>
                 <DropdownIcon />
@@ -87,7 +87,7 @@ export const NoteToobar: FC<NoteDetailsProps> = ({ note }) => {
                 )}
               </DropdownMenuContent>
             </DropdownMenuPortal>
-          </DropdownMenuRoot>
+          </DropdownMenu>
         </ToolbarEnd>
       </Toolbar>
     </NoteToolbarContainer>

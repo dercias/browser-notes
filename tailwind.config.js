@@ -1,41 +1,34 @@
+const colors = require('tailwindcss/colors');
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      // fontFamily: {
+      //   sans: ['var(--font-sans)', ...fontFamily.sans],
+      // },
       colors: {
-        primary: '#3B71CA',
+        primary: colors.blue,
       },
       keyframes: {
-        slideUpAndFade: {
-          from: { opacity: 0, transform: 'translateY(2px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        slideRightAndFade: {
-          from: { opacity: 0, transform: 'translateX(-2px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
-        },
-        slideDownAndFade: {
-          from: { opacity: 0, transform: 'translateY(-2px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
-        },
-        slideLeftAndFade: {
-          from: { opacity: 0, transform: 'translateX(2px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
         },
       },
       animation: {
-        slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideRightAndFade:
-          'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideDownAndFade:
-          'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideLeftAndFade:
-          'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography'), require('tailwindcss-animate')],
   variants: {
     margin: ['first'],
     borderRadius: ['first', 'last'],

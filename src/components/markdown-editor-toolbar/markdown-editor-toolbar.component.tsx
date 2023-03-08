@@ -12,7 +12,7 @@ import {
   Toolbar,
 } from '@remirror/react';
 import { MarkdownEditorToolbarContainer } from './markdown-editor-toolbar.styles';
-// import { ImageButton } from '../image-button/image-button.component';
+import { ImagePopover } from '../image-popover/image-popover.component';
 
 export const MarkdownEditorToolbar = () => {
   return (
@@ -33,7 +33,7 @@ export const MarkdownEditorToolbar = () => {
         </CommandButtonGroup>
         <VerticalDivider />
         <HistoryButtonGroup />
-        {/* <ImageButton /> */}
+        <ImagePopover />
       </Toolbar>
     </MarkdownEditorToolbarContainer>
   );

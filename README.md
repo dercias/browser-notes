@@ -28,3 +28,5 @@ browser-notes is built using:
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Tailwind Elements](https://tailwind-elements.com/)
 - [React Icons](https://react-icons.github.io/)
+- [Radix](https://www.radix-ui.com/docs/primitives/overview/introduction)
+- [shadcn/ui](https://ui.shadcn.com/)
