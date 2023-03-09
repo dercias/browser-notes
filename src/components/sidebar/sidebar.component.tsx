@@ -1,7 +1,12 @@
 import { ChangeEvent, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { clearFilters, createNote, filterBy } from '../../store/notes';
+import {
+  clearFilters,
+  createNote,
+  filterBy,
+  selectFilterBy,
+} from '../../store/notes';
 import { NotesList } from '../notes-list/notes-list.component';
 import {
   NotesIcon,
@@ -28,6 +33,7 @@ const NAV_ITEMS = {
 export const Sidebar = () => {
   const [searchString, setSearchString] = useState('');
   const [selectedNavItem, setSelectedNavItem] = useState(NAV_ITEMS.ALL_NOTES);
+  const filters = useSelector(selectFilterBy);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,20 +43,11 @@ export const Sidebar = () => {
     navigate(`/note/${id}`);
   };
 
-  const onShowStarredClick = () => {
-    dispatch(filterBy({ showStarred: true }));
-    setSelectedNavItem(NAV_ITEMS.STARRED);
-  };
+  const onShowStarredClick = () => dispatch(filterBy({ showStarred: true }));
 
-  const onShowAllNotesClick = () => {
-    dispatch(clearFilters());
-    setSelectedNavItem(NAV_ITEMS.ALL_NOTES);
-  };
+  const onShowAllNotesClick = () => dispatch(clearFilters());
 
-  const onShowTrashClick = () => {
-    dispatch(filterBy({ showDeleted: true }));
-    setSelectedNavItem(NAV_ITEMS.TRASH);
-  };
+  const onShowTrashClick = () => dispatch(filterBy({ showDeleted: true }));
 
   const isSelected = (navItem: string) => navItem === selectedNavItem;
 
@@ -63,14 +60,27 @@ export const Sidebar = () => {
     dispatch(filterBy({ searchString }));
   }, [searchString, dispatch]);
 
+  useEffect(() => {
+    const { showDeleted, showStarred } = filters || {};
+
+    if (showDeleted) {
+      setSelectedNavItem(NAV_ITEMS.TRASH);
+    } else if (showStarred) {
+      setSelectedNavItem(NAV_ITEMS.STARRED);
+    } else {
+      setSelectedNavItem(NAV_ITEMS.ALL_NOTES);
+    }
+  }, [filters]);
+
   return (
     <SidebarContainer>
       <SidebarHeader>
         <Logo />
-        <SidebarNav>
+        <SidebarNav data-testid='sidebar-nav'>
           <SidebarNavItem
             onClick={onShowAllNotesClick}
             className={isSelected(NAV_ITEMS.ALL_NOTES) ? 'font-semibold' : ''}
+            data-testid='sidebar-nav-item-trash'
           >
             <NotesIcon />
             {NAV_ITEMS.ALL_NOTES}
@@ -78,6 +88,7 @@ export const Sidebar = () => {
           <SidebarNavItem
             onClick={onShowStarredClick}
             className={isSelected(NAV_ITEMS.STARRED) ? 'font-semibold' : ''}
+            data-testid='sidebar-nav-item-starred'
           >
             <StarIcon />
             {NAV_ITEMS.STARRED}
