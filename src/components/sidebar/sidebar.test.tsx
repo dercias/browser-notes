@@ -15,7 +15,7 @@ const initialNotes = [
     updatedAt: 1675766578,
   },
   {
-    id: '1',
+    id: '2',
     title: 'Mauris sed sapien at diam sollicitudin',
     content: 'Lorem ipsum',
     starred: true,
