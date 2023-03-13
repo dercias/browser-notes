@@ -9,6 +9,8 @@ Check out the [demo](https://browser-notes.vercel.app/).
 With browser-notes you can:
 
 - Create, edit notes.
+- Upload images from computer.
+- Add images via URL.
 - Search notes.
 - Delete note, sending it to the trash. Recover note from trash.
 - Star / un-star note. Filter starred notes.
