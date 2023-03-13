@@ -27,10 +27,15 @@ export const MarkdownEditorContainer = styled.div(() => [
   .remirror-editor li p {
     margin: 0 !important;
   }
+
   .remirror-editor img + .ProseMirror-separator,
   .remirror-editor img + .ProseMirror-separator + .ProseMirror-trailingBreak
   {
     display: none !important;
+  }
+
+  .remirror-list-item-marker-container {
+    display: none !important; /* fix firefox bug */
   }
   `,
 ]);
