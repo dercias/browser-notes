@@ -81,12 +81,15 @@ export const ImagePopover = () => {
                     <Input
                       value={imageUrl}
                       onChange={onImageUrlInputChange}
-                      disabled={!imageUrl}
                       type='text'
                       placeholder='Image Url'
                       className='grow'
                     />
-                    <Button variant='link' onClick={onAddImageUrlClick}>
+                    <Button
+                      variant='link'
+                      onClick={onAddImageUrlClick}
+                      disabled={!imageUrl}
+                    >
                       <AddImageIcon />
                     </Button>
                   </div>
