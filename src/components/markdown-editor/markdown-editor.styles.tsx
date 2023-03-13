@@ -23,5 +23,14 @@ export const MarkdownEditorContainer = styled.div(() => [
   .remirror-editor {
     padding-top: ${theme`spacing.6`};
   }
+
+  .remirror-editor li p {
+    margin: 0 !important;
+  }
+  .remirror-editor img + .ProseMirror-separator,
+  .remirror-editor img + .ProseMirror-separator + .ProseMirror-trailingBreak
+  {
+    display: none !important;
+  }
   `,
 ]);
