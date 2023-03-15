@@ -20,6 +20,7 @@ import {
   TableExtension,
   TrailingNodeExtension,
   ImageExtension,
+  EntityReferenceExtension,
 } from 'remirror/extensions';
 import {
   EditorComponent,
@@ -99,7 +100,12 @@ export const MarkdownEditor: FC<PropsWithChildren<MarkdownEditorProps>> = ({
        * e.g. in a list item
        */
       new HardBreakExtension(),
-      new ImageExtension(),
+      new ImageExtension({
+        extraAttributes: {
+          'data-entity-reference': '',
+        },
+      }),
+      new EntityReferenceExtension(),
     ],
     [placeholder]
   );

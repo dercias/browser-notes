@@ -4,7 +4,7 @@ import {
   AddImageButton,
   AddImageButtonIcon,
 } from './image-popover.styles';
-import { useRemirrorContext } from '@remirror/react';
+import { useChainedCommands, useEditorFocus } from '@remirror/react';
 import { checkIfImageExists, getBase64 } from '../../utils';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
 import { Popover, PopoverTrigger, PopoverContent } from '../popover';
@@ -12,38 +12,56 @@ import { Button } from '../button/button.component';
 import { Input } from '../input';
 
 export const ImagePopover = () => {
-  const { manager } = useRemirrorContext();
-  const [imageUrl, setImageUrl] = useState('');
+  const chain = useChainedCommands();
+  const [imageUrl, setImageUrl] = useState(
+    'https://robohash.org/3?set=set&size=180x180'
+  );
   const [fileToUpload, setFileToUpload] = useState<File | undefined>(undefined);
   const [showInvalidImageAlert, setShowInvalidImageAlert] = useState(false);
   const [showInvalidFileAlert, setShowInvalidFileAlert] = useState(false);
   const btnRef = createRef<HTMLButtonElement>();
+  const [isFocused] = useEditorFocus();
+  const onImageUrlInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageUrl(event.target.value);
+    setShowInvalidImageAlert(false);
+  };
+
+  const insertImage = (src: string) => {
+    if (!isFocused) {
+      chain
+        .insertNewLine()
+        .focus('end')
+        .insertImage({
+          src,
+        })
+        .insertNewLine()
+        .run();
+    } else {
+      chain
+        .insertNewLine()
+        .insertImage({
+          src,
+        })
+        .insertNewLine()
+        .run();
+    }
+  };
 
   const onAddImageUrlClick = async () => {
     const exists = await checkIfImageExists(imageUrl);
 
     if (exists) {
-      manager.store.commands.insertImage({
-        src: imageUrl,
-      });
-      setImageUrl('');
+      insertImage(imageUrl);
     } else {
       setShowInvalidImageAlert(true);
     }
-  };
-
-  const onImageUrlInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setImageUrl(event.target.value);
-    setShowInvalidImageAlert(false);
   };
 
   const onUploadImageClick = async () => {
     try {
       if (fileToUpload) {
         const base64 = await getBase64(fileToUpload);
-        manager.store.commands.insertImage({
-          src: base64,
-        });
+        insertImage(base64);
         setShowInvalidFileAlert(false);
       }
     } catch (error) {
